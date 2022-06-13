@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Создание новой заявки</h1>
+    <form action="{% url 'repairs:create' %}" method="post">
+        {{ form }}
+        {% csrf_token %}
+        <button type="submit" class="btn btn-success">Создать</button>
+    </form>
+{% endblock content %}

@@ -8,10 +8,10 @@
 <body class="container">
 <ul class="list-group">
     <li class="list-group-item">
-        User: {{ user }}
+        User: {{ user }} Role: {{ user.get_role_display }}
     </li>
     <li class="list-group-item">
-        <a href="{% url 'home' %}">Home</a>
+        <a href="{% url 'home' %}">Home</a> | <a href="{% url 'repairs:list' %}">Заявки</a>
     </li>
 </ul>
 

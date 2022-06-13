@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Заявки на ремонт</h1>
+    {% if user.role == 'CUSTOMER' %}
+        <div class="row">
+            <div class="col-md-12">
+                <a href="{% url 'repairs:create' %}"
+                   class="btn btn-success">Создать заявку</a>
+            </div>
+        </div>
+    {% endif %}
+    <hr>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-striped table-hover">
+                <thead>
+                <tr>
+                    <th>Номер заявки</th>
+                    <th>Локомотив</th>
+                    <th>Место для ремонта</th>
+                    <th>Тип ремонта</th>
+                    <th>Дата и время ремонта</th>
+                    <th>Статус</th>
+                    <th>Открыть</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for repair in object_list %}
+                    <tr>
+                        <td>{{ repair.id }}</td>
+                        <td>{{ repair.locomotive }}</td>
+                        {% if repair.places_to_work %}
+                            <td>{{ repair.places_to_work }}</td>
+                        {% else %}
+                            <td>Не назначено</td>
+                        {% endif %}
+                        {% if repair.type_repair %}
+                            <td>{{ repair.type_repair }}</td>
+                        {% else %}
+                            <td>Не назначено</td>
+                        {% endif %}
+                        {% if repair.time_to_work %}
+                            <td>{{ repair.time_to_work }}</td>
+                        {% else %}
+                            <td>Не назначено</td>
+                        {% endif %}
+                        <td>{{ repair.get_status_display }}</td>
+                    <td>
+                        <a href="{{ repair.get_absolute_url }}">Открыть</a>
+                    </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock content %}
