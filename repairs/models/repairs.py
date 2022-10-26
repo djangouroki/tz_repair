@@ -1,23 +1,37 @@
 from django.db import models
 from django.urls import reverse
 
-from repairs.models import Status
+
+class Status(models.TextChoices):
+    """Статусы для заявок"""
+    CREATED = 'CREATED', 'Новая заявка от клиента'
+    CONFIRMED = 'CONFIRMED', 'Подтверждена техником'
+    READY_TO_WORK = 'READY_TO_WORK', 'Готова к работе'
+    PROGRESS = 'PROGRESS', 'В работе'
+    VERIFICATION = 'VERIFICATION', 'Ремонт выполнен'
+    TESTS = 'TESTS', 'На тестировании'
+    RE_REPAIR = 'RE_REPAIR', 'На доработку'
 
 
 class Repair(models.Model):
+    """Заявка на ремонт"""
 
     users = models.ManyToManyField(
         to="users.User", related_name="repairs",
         verbose_name="Участники заявки"
     )
     description = models.TextField(verbose_name="Описание поломки")
-    status = models.CharField(max_length=20, choices=Status.choices)
+    status = models.CharField(
+        max_length=20,
+        choices=Status.choices,
+        default=Status.CREATED,
+    )
     time_to_work = models.DateTimeField(
         verbose_name="Время начала ремонта", null=True, blank=True
     )
     places_to_work = models.ForeignKey(
         "repairs.PlacesToWork", related_name="place_repairs",
-        on_delete=models.PROTECT, verbose_name="Место для ремона",
+        on_delete=models.PROTECT, verbose_name="Место для ремонта",
         null=True, blank=True
     )
     locomotive = models.ForeignKey(

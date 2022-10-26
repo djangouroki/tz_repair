@@ -1,0 +1,34 @@
+<ul class="list-unstyled">
+    <li><strong>Описание:</strong> {{ repair.description }}</li>
+    <li>
+        <strong>Причастные:</strong>
+        <ul>
+            {% for user in repair.users.all %}
+                <li><strong>{{ user.get_role_display }}</strong>
+                    - {{ user.first_name }} {{ user.last_name }}; {{ user.email }}
+                </li>
+            {% endfor %}
+        </ul>
+    </li>
+    <li><strong>Локомотив:</strong> {{ repair.locomotove }}</li>
+    {% if repair.places_to_work %}
+        <li><strong>Место ремонта:</strong> {{ repair.places_to_work }}</li>
+    {% endif %}
+    {% if repair.time_to_work %}
+        <li><strong>Время ремонта:</strong> {{ repair.time_to_work }}</li>
+    {% endif %}
+    {% if repair.type_repair %}
+        <li><strong>Тип ремонта:</strong> {{ repair.type_repair }}</li>
+    {% endif %}
+    {% if repair.parts %}
+        <li>
+            <strong>Запчасти:</strong>
+            <ul>
+                {% for part in repair.parts.all %}
+                    <li>{{ part.name }}</li>
+                {% endfor %}
+            </ul>
+        </li>
+    {% endif %}
+    <li><strong>Статус:</strong> {{ repair.get_status_display }}</li>
+</ul>
