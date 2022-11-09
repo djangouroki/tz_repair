@@ -30,6 +30,7 @@ ALLOWED_HOSTS = []
 AUTH_USER_MODEL = 'users.User'
 LOGIN_REDIRECT_URL = '/repairs/'
 LOGOUT_REDIRECT_URL = '/'
+LOGIN_URL = '/users/login/'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
